@@ -5,7 +5,7 @@ Your finances stay private, right on your device.
 
 Duit Ledger is a simple personal money tracker that helps you record income and spending, plan debt repayments, set savings goals and keep an eye on your finances.
 
-**[Open Duit Ledger](https://t2rt2re.github.io/duit-ledger/)**
+**[Open Duit Ledger](https://t2rt2re.github.io/duit-ledger-v1/)**
 
 Available in **English and Bahasa Malaysia**, with light and dark mode.
 
