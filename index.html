@@ -4,8 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Duit Ledger: track your money, repay your debt</title>
-<meta name="theme-color" content="#F7F0E6">
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#FAF6F0" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#1B1612" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.json"><link rel="icon" type="image/png" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="Duit Ledger">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#ffffff;--card:#ffffff;--ink:#1f1b3a;--mute:#6a6585;--line:#ece8f7;--acc:#6c4cf1;--acc2:#e0337f;--pos:#0a8a6c;--blob1:#ffdcec;--blob2:#dcd8ff;--acc-ink:#fff;--out:#e0337f;--warn:#b7791f;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -154,14 +156,138 @@ button.p{background:linear-gradient(135deg,var(--acc),var(--acc2))!important}
 #cycleConfirm{min-width:76px!important}
 
 </style>
+<style id="theme-warm">
+/* ===== Warm minimalism: cream #FAF6F0 / beige #F3EDE4 / black / brown #6E5A4B ===== */
+:root,:root[data-theme="light"]{--bg:#FAF6F0;--card:#F3EDE4;--field:#FAF6F0;--ink:#000;--mute:rgba(0,0,0,.66);--line:rgba(0,0,0,.14);--line2:#000;--edge:#000;--brown:#6E5A4B;--on-brown:#FAF6F0;--pos:#3F6B3A;--out:#A5372B;--hover:#E9E0D2;--focus:rgba(110,90,75,.35);--acc:#6E5A4B;--acc2:#6E5A4B;--acc-ink:#FAF6F0;--warn:#8A5A00;--sketch-hover:#E9E0D2;--paper-card:#F3EDE4;--sketch-border:#000;--fd:'Bricolage Grotesque','DM Sans',system-ui,sans-serif;--fb:'DM Sans',system-ui,-apple-system,'Segoe UI',sans-serif;color-scheme:light}
+:root[data-theme="dark"]{--bg:#1B1612;--card:#262019;--field:#1B1612;--ink:#FAF6F0;--mute:rgba(250,246,240,.68);--line:rgba(250,246,240,.16);--line2:rgba(250,246,240,.6);--edge:#FAF6F0;--brown:#6E5A4B;--on-brown:#FAF6F0;--pos:#9CC98F;--out:#F08C7C;--hover:#332B22;--focus:rgba(250,246,240,.25);--acc:#C9B29E;--acc2:#C9B29E;--acc-ink:#1B1612;--warn:#E8B923;--sketch-hover:#332B22;--paper-card:#262019;--sketch-border:#FAF6F0;color-scheme:dark}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1B1612;--card:#262019;--field:#1B1612;--ink:#FAF6F0;--mute:rgba(250,246,240,.68);--line:rgba(250,246,240,.16);--line2:rgba(250,246,240,.6);--edge:#FAF6F0;--brown:#6E5A4B;--on-brown:#FAF6F0;--pos:#9CC98F;--out:#F08C7C;--hover:#332B22;--focus:rgba(250,246,240,.25);--acc:#C9B29E;--acc2:#C9B29E;--acc-ink:#1B1612;--warn:#E8B923;--sketch-hover:#332B22;--paper-card:#262019;--sketch-border:#FAF6F0;color-scheme:dark}}
+html,html body{background:var(--bg)!important}
+html body:before{display:none!important}
+html body{color:var(--ink)!important;font:400 16px/1.55 var(--fb)!important;-webkit-font-smoothing:antialiased}
+html body button,html body input,html body select,html body textarea,html body option,html body table,html body summary,html body label{font-family:var(--fb)!important;letter-spacing:0}
+html body h1,html body h2,html body h3,html body #lock h1,html body .tile b,html body .sum b{font-family:var(--fd)!important;letter-spacing:-.03em}
+html body .wrap{max-width:1080px!important;padding:20px 20px 80px!important;border:0!important}
+/* nav: logo left, controls right, black rule under */
+html body .wrap>div:first-child{align-items:center}
+html body .wrap>div:first-child::before{content:'RM';order:0;display:inline-grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--brown);color:var(--on-brown);border:1.5px solid var(--edge);font:800 .95rem var(--fd);letter-spacing:-.02em}
+html body .wrap>div:first-child>div{order:1}
+html body .wrap>div:first-child::after{content:'';order:2;flex:0 0 100%;height:0;border-bottom:1.5px solid var(--edge);margin-top:6px}
+html body .wrap>div:first-child>h1{order:3;flex:0 0 100%}
+/* hero */
+html body h1{font-weight:800!important;font-size:clamp(3rem,12vw,6.4rem)!important;line-height:.92!important;letter-spacing:-.055em!important;color:var(--ink)!important;-webkit-text-fill-color:currentColor!important;background:none!important;display:block;margin:34px 0 14px!important}
+html body #lock h1{font-size:2.4rem!important;margin:0 0 10px!important}
+html body h2,html body .box h2{font-weight:700!important;font-size:1.15rem}
+html body .sub{font-size:1.1rem;max-width:34em;color:var(--mute)!important;margin-bottom:8px}
+html body .note,html body .m,html body .tile small,html body footer{color:var(--mute)!important}
+html body #langToggle,html body #gear,html body #thm{width:44px;height:44px;padding:0!important;border-radius:50%!important;background:var(--card)!important;border:1.5px solid var(--edge)!important;box-shadow:none!important;color:var(--ink)!important;display:inline-flex;align-items:center;justify-content:center;transition:background .15s}
+html body #langToggle:hover,html body #gear:hover,html body #thm:hover{background:var(--hover)!important}
+/* cards */
+html body .box,html body .sum>div,html body details.more>summary,html body #installCard,html body .wedding-hero{background:var(--card)!important;border:1.5px solid var(--edge)!important;border-radius:1rem!important;box-shadow:none!important}
+html body .box{padding:22px!important}
+html body .sum>div{padding:18px 16px!important}
+html body .sum small{color:var(--mute)!important;text-transform:uppercase;letter-spacing:.08em;font-size:.7rem;font-weight:700}
+html body .sum b{font-weight:800;font-variant-numeric:tabular-nums}
+html body .in{color:var(--pos)!important}html body .outc{color:var(--out)!important}
+/* bento grid */
+html body .tiles{display:grid!important;grid-template-columns:repeat(4,1fr)!important;grid-auto-rows:minmax(136px,auto);gap:14px!important;margin:22px 0 28px!important}
+html body .tile{min-height:0!important;padding:18px!important;background:var(--card)!important;color:var(--ink)!important;border:1.5px solid var(--edge)!important;border-radius:1rem!important;box-shadow:none!important;transition:transform .15s,box-shadow .15s,background .15s!important}
+html body .tile[data-go="1"]{grid-column:span 2;grid-row:span 2;background:var(--brown)!important}
+html body .tile[data-go="9"],html body .tile[data-go="4"]{grid-column:span 2}
+html body .tile:hover{transform:translate(-2px,-2px)!important;box-shadow:4px 4px 0 var(--edge)!important}
+html body .tile[data-go="1"]:hover{background:var(--brown)!important}
+html body .tile:active{transform:none!important;box-shadow:none!important}
+html body .tile .ti{display:inline-grid;place-items:center;width:46px;height:46px;border-radius:50%;background:var(--bg);border:1.5px solid var(--edge);font-size:1.4rem;line-height:1;margin-bottom:auto!important}
+html body .tile b{margin-top:14px;font-size:1.1rem;font-weight:700;color:var(--ink)!important}
+html body .tile[data-go="1"] b,html body .tile[data-go="1"] small{color:var(--on-brown)!important}
+html body .tile[data-go="1"] b{font-size:2rem;line-height:1.05}
+html body .tile[data-go="1"] small{font-size:1rem}
+html body .tile[data-go="1"] .ti{width:60px;height:60px;font-size:1.8rem}
+/* buttons */
+html body button.p{background:var(--brown)!important;color:var(--on-brown)!important;border:1.5px solid var(--edge)!important;border-radius:.75rem!important;box-shadow:none!important;font-weight:600!important;padding:10px 20px!important;min-height:44px;transform:none!important;transition:filter .15s!important}
+html body button.p:hover,html body button.p:focus-visible,html body button.p:active{background:var(--brown)!important;color:var(--on-brown)!important;filter:brightness(.9);transform:none!important;box-shadow:none!important}
+html body #goHome{width:44px!important;min-width:44px!important;height:44px!important;padding:0!important;font-size:0!important;border-radius:50%!important;display:inline-flex;align-items:center;justify-content:center}
+html body #goHome::before{content:'\2190';font-size:1.3rem;line-height:1;font-weight:700}
+html body button.g{background:transparent!important;border:1.5px solid var(--edge)!important;color:var(--ink)!important;border-radius:.6rem!important;padding:4px 10px!important;box-shadow:none!important;transform:none!important}
+html body button.g:hover{background:var(--hover)!important}
+html body .subtabs .stab,html body .tab{background:transparent!important;color:var(--ink)!important;border:1.5px solid var(--edge)!important;border-radius:999px!important;box-shadow:none!important;font-weight:600!important;padding:9px 15px!important}
+html body .seg button{background:transparent!important;color:var(--ink)!important;border:1.5px solid var(--edge)!important;border-radius:1rem!important;box-shadow:none!important;font-weight:600}
+html body .subtabs .stab:not([aria-pressed=true]):hover,html body .seg button:not([aria-pressed=true]):hover,html body .tab:not([aria-selected=true]):hover{background:var(--hover)!important;color:var(--ink)!important}
+html body .subtabs .stab[aria-pressed=true],html body .seg button[aria-pressed=true],html body .tab[aria-selected=true]{background:var(--brown)!important;color:var(--on-brown)!important;border-color:var(--edge)!important}
+html body .seg button[aria-pressed=true] small{color:inherit!important;opacity:.8}
+/* form */
+html body label{font-weight:600;font-size:.82rem;color:var(--mute)}
+html body input,html body select,html body textarea{background:var(--field)!important;color:var(--ink)!important;border:1.5px solid var(--edge)!important;border-radius:.75rem!important;min-height:44px!important;box-shadow:none!important}
+html body input:focus,html body select:focus,html body textarea:focus{outline:none!important;box-shadow:0 0 0 3px var(--focus)!important}
+html body :focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+html body input[type=checkbox],html body input[type=radio]{accent-color:var(--brown);min-height:0!important}
+html body input[type=file]::file-selector-button{font:600 .85rem var(--fb);background:var(--brown);color:var(--on-brown);border:1.5px solid var(--edge);border-radius:.6rem;padding:6px 14px;margin-right:10px;cursor:pointer}
+/* data */
+html body .bar{height:12px!important;background:var(--field)!important;border:1.5px solid var(--edge)!important;border-radius:999px!important}
+html body .bar i{background:var(--brown)!important;border-radius:999px!important}
+html body .res{border-left:4px solid var(--brown)!important;background:var(--bg)!important;border-radius:0 .75rem .75rem 0;padding:10px 14px}
+html body table th{background:var(--hover)!important;color:var(--ink)!important;text-transform:uppercase;letter-spacing:.06em;font-size:.72rem;font-weight:700}
+html body th,html body td,html body .list li{border-bottom:1px solid var(--line)!important}
+html body .amt{font-variant-numeric:tabular-nums}
+html body details.more>summary{font-weight:700;padding:13px 16px}
+html body details.more>summary:hover{background:var(--hover)!important}
+html body details.more>summary::after{color:var(--ink)!important}
+html body .wedding-hero h2{font-family:var(--fd)!important;font-weight:800!important;font-size:1.8rem!important}
+html body .hand-note{font-family:var(--fd)!important;font-weight:700;color:var(--ink)}
+html body .confirm-row{border-top:1px solid var(--line)}
+html body #cycleStatus{color:var(--pos)}
+html body #toast{background:var(--ink)!important;color:var(--bg)!important;border-radius:999px;font-weight:600;box-shadow:none}
+html body ::selection{background:var(--brown);color:var(--on-brown)}
+@media(max-width:640px){html body .wrap{padding:16px 14px 64px!important}html body .tiles{grid-template-columns:repeat(2,1fr)!important;grid-auto-rows:minmax(128px,auto)}html body .tile[data-go="1"]{grid-row:span 1;min-height:180px}html body .box{padding:17px!important}html body .sum>div{padding:12px 10px!important}}
+</style><style id="theme-bento">
+:root{--fd:'Inter Tight','DM Sans',system-ui,sans-serif}
+:root,:root[data-theme="light"]{--nav:#E8DDCB;--field:#EADFCD;--num:#7A6858;--ifield:#6E5A4B}
+:root[data-theme="dark"]{--nav:#2E261E;--field:#2E261E;--num:#C9B29E;--ifield:rgba(250,246,240,.5)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--nav:#2E261E;--field:#2E261E;--num:#C9B29E;--ifield:rgba(250,246,240,.5)}}
+/* nav */
+html body .wrap>div:first-child{background:var(--nav);border-bottom:2.5px solid var(--edge);border-radius:1rem 1rem 0 0;padding:10px 16px!important;margin:0 0 18px}
+html body .wrap>div:first-child::before{background:transparent;color:var(--ink);border:2px solid var(--edge)}
+html body .wrap>div:first-child::after{display:none}
+html body .brand{margin-right:auto;font:800 .95rem/1.05 var(--fd);text-transform:uppercase;letter-spacing:-.01em}
+html body .wrap>div:first-child>div{order:2}
+/* thick crisp cards with heavier bottom edge */
+html body .box,html body .sum>div,html body details.more>summary,html body #installCard,html body .wedding-hero,html body .tile,html body .hero-card{border:2.5px solid var(--edge)!important;border-radius:1.5rem!important;box-shadow:0 3px 0 var(--edge)!important}
+html body .box h2,html body #backbar h2{text-transform:uppercase;font-weight:800!important;letter-spacing:-.01em!important}
+html body .box h2{font-size:1.05rem}
+/* hero card */
+html body .hero-card{grid-column:span 2;grid-row:span 2;background:var(--card);padding:28px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:16px}
+html body .hero-card h1{font-size:clamp(2rem,4.6vw,3.3rem)!important;line-height:1!important;text-transform:uppercase;letter-spacing:-.035em!important;font-weight:800!important;margin:0!important}
+html body .hero-card .sub{margin:0;font-size:1rem;max-width:30em}
+/* bento tiles: 01..07, title bottom-left */
+html body .tiles{counter-reset:t;grid-auto-rows:minmax(150px,auto);gap:16px!important}
+html body .tile{counter-increment:t;position:relative;justify-content:flex-end;padding:18px!important;background:var(--card)!important}
+html body .tile::before{content:counter(t,decimal-leading-zero);position:absolute;top:14px;left:18px;font:800 2.1rem/1 var(--fd);color:var(--num);letter-spacing:-.04em}
+html body .tile .ti{position:absolute;top:14px;right:16px;width:auto;height:auto;border:0;background:none;font-size:1.5rem;margin:0!important}
+html body .tile b,html body .tile[data-go="1"] b{margin-top:auto;font-size:1rem;line-height:1.2;font-weight:800;text-transform:uppercase;letter-spacing:-.01em;color:var(--ink)!important}
+html body .tile[data-go="1"] small{font-size:.82rem;color:var(--mute)!important}
+html body .tile[data-go="1"] .ti{width:auto;height:auto;font-size:1.5rem}
+html body .tile[data-go="1"],html body .tile[data-go="1"]:hover{grid-column:auto;grid-row:auto;background:var(--card)!important}
+html body .tile[data-go="9"],html body .tile[data-go="4"]{grid-column:auto}
+html body .tile[data-go="5"],html body .tile[data-go="5"]:hover{grid-column:span 2;background:var(--brown)!important}
+html body .tile[data-go="5"] b,html body .tile[data-go="5"] small{color:var(--on-brown)!important}
+html body .tile[data-go="5"]::before{color:rgba(250,246,240,.7)}
+html body .tile:hover{transform:translateY(-3px)!important;box-shadow:0 6px 0 var(--edge)!important}
+html body .tile:active{transform:translateY(2px)!important;box-shadow:0 1px 0 var(--edge)!important}
+/* buttons + inputs */
+html body button.p{border:1.5px solid var(--brown)!important;border-radius:.5rem!important;text-transform:uppercase;letter-spacing:.04em;font-size:.78rem!important;font-weight:700!important;padding:11px 18px!important}
+html body input,html body select,html body textarea{background:var(--field)!important;border:1.5px solid var(--ifield)!important;border-radius:.6rem!important}
+html body input:focus,html body select:focus,html body textarea:focus{border-color:var(--edge)!important}
+html body .subtabs .stab,html body .seg button{border-width:2px!important}
+html body .bar{border-width:2px!important}
+@media(max-width:640px){html body .hero-card{grid-row:auto;padding:22px}html body .tile::before{font-size:1.7rem}html body .tile[data-go="1"]{min-height:0!important}html body .tiles{grid-auto-rows:minmax(130px,auto)}}
+</style>
 </head>
 <body>
 <div class="wrap">
-<div style='display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap'><h1>Duit Ledger</h1><div style='display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-left:auto'><select id='lang' aria-label='Language' style='width:auto;max-width:150px;border-radius:999px;padding:8px 10px;font-size:.9rem'><option value='en'>English</option><option value='ms'>Bahasa Malaysia</option></select><button id='langToggle' type='button' aria-label='Change language' title='Change language'>🇬🇧</button><button id='gear' type='button' aria-label='Backup and PIN' style='background:var(--card);border:1px solid var(--line);border-radius:999px;padding:7px 11px;font-size:1.2rem;cursor:pointer;box-shadow:0 6px 20px rgba(108,76,241,.12)'>⚙️</button><button id='thm' type='button' aria-label='Switch between light and dark mode' style='background:var(--card);border:1px solid var(--line);border-radius:999px;padding:7px 11px;font-size:1.2rem;cursor:pointer;box-shadow:0 6px 20px rgba(108,76,241,.12)'>🌙</button></div></div>
+<div style='display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap'><span class="brand">Duit<br>Ledger</span><div style='display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-left:auto'><select id='lang' aria-label='Language' style='width:auto;max-width:150px;border-radius:999px;padding:8px 10px;font-size:.9rem'><option value='en'>English</option><option value='ms'>Bahasa Malaysia</option></select><button id='langToggle' type='button' aria-label='Change language' title='Change language'>🇬🇧</button><button id='gear' type='button' aria-label='Backup and PIN' style='background:var(--card);border:1px solid var(--line);border-radius:999px;padding:7px 11px;font-size:1.2rem;cursor:pointer;box-shadow:0 6px 20px rgba(108,76,241,.12)'>⚙️</button><button id='thm' type='button' aria-label='Switch between light and dark mode' style='background:var(--card);border:1px solid var(--line);border-radius:999px;padding:7px 11px;font-size:1.2rem;cursor:pointer;box-shadow:0 6px 20px rgba(108,76,241,.12)'>🌙</button></div></div>
 <div id="home">
-<p class="sub">Spend with clarity. Pay down debt. Save for what matters. Your finances stay private, right on your device.</p>
 <div class="box guide" id="guide"><h2>Start in 3 steps</h2><ol><li>Add your salary as Money in.</li><li>Add what you spend as Money out.</li><li>Check Left over and the chart. Have debt? Open the Debt planner tab.</li></ol></div>
 <div class="tiles">
+<div class="hero-card"><h1>Track money. Repay debt. Save more.</h1><p class="sub">Spend with clarity. Pay down debt. Save for what matters. Your finances stay private, right on your device.</p><button class="p" type="button" data-go="1">Open ledger</button></div>
 <button class="tile" type="button" data-go="1"><span class="ti">📒</span><b>Monthly ledger</b><small>Entries, charts, bills, limits, reports</small></button>
 <button class="tile" type="button" data-go="2"><span class="ti">💳</span><b>Debt planner</b><small>Clear your debts step by step</small></button>
 <button class="tile" type="button" data-go="3"><span class="ti">🌱</span><b>Savings goal</b><small>Goals, challenges, emergency fund</small></button>
@@ -169,7 +295,8 @@ button.p{background:linear-gradient(135deg,var(--acc),var(--acc2))!important}
 <button class="tile" type="button" data-go="5" id="tileWed"><span class="ti">💍</span><b>Tabung Kahwin</b><small>Rancang dan simpan untuk hari bahagia</small></button>
 <button class="tile" type="button" data-go="6"><span class="ti">🍽️</span><b>Split a bill</b><small>Share a bill fairly</small></button>
 <button class="tile" type="button" data-go="4"><span class="ti">🧾</span><b>Tax relief</b><small>Track your relief limits</small></button>
-</div></div>
+</div>
+<div class="box" id="installCard" style="display:none;margin-top:16px"><h2>📲 Install Duit Ledger</h2><p class="note" id="insText">Add it to your home screen. It opens like an app and works offline.</p><p class="note" id="insIos" style="display:none">On iPhone: tap Share, then Add to Home Screen.</p><p class="note" id="insSafari" style="display:none">Open this page in Safari, then tap Share and Add to Home Screen.</p><div class="row"><button class="p" id="insBtn" type="button" style="display:none">Install app</button><button class="g" id="insNo" type="button">Not now</button></div></div></div>
 <div id="backbar" hidden><button class="p" id="goHome" type="button" aria-label="Home" title="Home">⌂</button><h2 id="secTitle"></h2></div>
 <div class="tabs" role="tablist">
 <button class="tab" role="tab" id="t1" aria-selected="true" aria-controls="p1"><span style='margin-right:6px'>📒</span>Monthly ledger</button>
@@ -194,7 +321,7 @@ button.p{background:linear-gradient(135deg,var(--acc),var(--acc2))!important}
 <div class='grp' data-g='1'><p class='note' id='nudge' style='margin:12px 2px'></p><div class="box" style="margin-top:0">
 <h2>Add an entry</h2>
 <div class="row">
-<label>Type<select id="eType"><option value="in">Money in (salary, bonus)</option><option value="out" selected>Money out (spending)</option></select></label>
+<label>Type<select id="eType"><option value="in">Money in</option><option value="out" selected>Money out</option></select></label>
 <label>Category<input id="eCat" list="cats" placeholder="e.g. Food" ></label>
 <label>Account<select id='eW'></select></label><datalist id="cats"><option>Salary</option><option>Rent</option><option>Food</option><option>Transport</option><option>Bills</option><option>Debt payment</option><option>Savings</option><option>Other</option></datalist>
 <label>Amount (RM)<input id="eAmt" type="number" min="0" step="0.01" inputmode="decimal"></label>
@@ -254,7 +381,7 @@ button.p{background:linear-gradient(135deg,var(--acc),var(--acc2))!important}
 <div id="splitPeople"></div><div id="splitResult" class="res" aria-live="polite"></div><div class="row" style="margin-top:16px"><button class="p" id="splitCopy" type="button">Copy breakdown</button><button class="g" id="splitReset" type="button">Reset</button></div>
 </div></section>
 
-<section class='panel' id='p7' role='tabpanel' hidden><div class='box'><h2>Backup and PIN</h2><p class='note'>Your backup file contains everything: ledger, debts, savings, accounts, wedding fund and tax tracker.</p><div class='row'><button class='p' id='setPin'>Set PIN lock</button><button class='p' id='xJson'>Save backup</button><label style='flex:0 0 auto'>Choose backup file<input type='file' id='xIn' accept='.json'></label><button class='p' id='restoreConfirm' type='button' disabled>OK · Restore backup</button></div><p class='note' id='restoreStatus' aria-live='polite'>Choose a backup file, then press OK to restore it.</p><p class='note'>Downloads work when the app is opened from your own website, not inside a preview.</p></div></section>
+<section class='panel' id='p7' role='tabpanel' hidden><div class='box'><h2>Backup and PIN</h2><p class='note'>Your backup file contains everything: ledger, debts, savings, accounts, wedding fund and tax tracker.</p><div class='row'><button class='p' id='setPin'>Set PIN lock</button><button class='p' id='xJson'>Save backup</button><label style='flex:0 0 auto'>Choose backup file<input type='file' id='xIn' accept='.json'></label><button class='p' id='restoreConfirm' type='button' disabled>OK · Restore backup</button></div><p class='note' id='restoreStatus' aria-live='polite'>Choose a backup file, then press OK to restore it.</p><p class='note'>Downloads work when the app is opened from your own website, not inside a preview.</p></div><div class='box'><h2>Install on your phone</h2><p class='note'>Android (Chrome): open the menu (⋮), then Install app.</p><p class='note'>iPhone (Safari): tap Share, then Add to Home Screen.</p><p class='note'>Save a backup first, because the installed app can keep its own separate data. Then use Restore backup inside the installed app.</p></div></section>
 <section class='panel' id='p8' role='tabpanel' hidden></section>
 <footer>Your data saves automatically on this device and in this browser. Clearing browser data or switching devices may remove or hide it, so keep a backup for extra safety.</footer>
 </div>
@@ -302,7 +429,7 @@ function renderLedger(){
  const inn=es.filter(e=>e.type==="in").reduce((s,e)=>s+e.amt,0);
  const out=es.filter(e=>e.type==="out").reduce((s,e)=>s+e.amt,0);
  $("sIn").textContent=fmt(inn);$("sOut").textContent=fmt(out);renderTrend();renderBudgets();renderGoal();renderNudge();$("guide").hidden=S.entries.length>0;renderEF();renderWallets();renderYear();
- const bf=openingBal(m),left=inn-out+bf;$("sLeft").textContent=fmt(left);$("bf").textContent=bf?tr('Brought forward')+': '+fmt(bf):'';$("pcap").innerHTML=esc(tr('Period'))+': <b>'+esc(plabel(m))+'</b> <button class="g" id="pchg" type="button" style="color:var(--acc);font-weight:700">'+esc(tr('Change'))+'</button>';$("pchg").onclick=()=>{showGrp(4);scrollTo({top:0,behavior:'smooth'})};$("sLeft").className=left<0?"outc":"in";
+ const bf=openingBal(m),left=inn-out+bf;$("sLeft").textContent=fmt(left);$("bf").textContent=bf?tr('Brought forward')+': '+fmt(bf):'';$("pcap").innerHTML=esc(tr('Period'))+': <b>'+esc(plabel(m))+'</b> <button class="g" id="pchg" type="button" style="color:var(--acc);font-weight:700">'+esc(tr('Change'))+'</button>';$("pchg").onclick=()=>{showGrp(1);const dc=document.getElementById('dCycle');if(dc){dc.open=true;dc.scrollIntoView({behavior:'smooth'})}};$("sLeft").className=left<0?"outc":"in";
  const by={};es.filter(e=>e.type==="out").forEach(e=>by[e.cat]=(by[e.cat]||0)+e.amt);
  const rows=Object.entries(by).sort((a,b)=>b[1]-a[1]);
  PIE(rows,out);$("cats2").innerHTML=rows.length?rows.map(([c,v])=>`<div class="cat"><div><span>${ce(c)}</span><span class="amt">${fmt(v)} (${Math.round(v/out*100)}%)${S.budgets[c]?" of limit "+fmt(S.budgets[c]):""}</span></div><div class="bar"><i style="width:${S.budgets[c]?Math.min(100,v/S.budgets[c]*100):v/rows[0][1]*100}%;${S.budgets[c]&&v>S.budgets[c]?"background:var(--out)":""}"></i></div></div>`).join(""):'<div class="empty">No spending logged for this month yet.</div>';
@@ -365,8 +492,8 @@ $('gSave').onclick=()=>{const n=$('gName').value.trim(),t=parseFloat($('gTar').v
 function dl(name,text,type){try{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type:type}));a.download=name;document.body.appendChild(a);a.click();a.remove()}catch(e){}}
 function csvText(){const nl=String.fromCharCode(10),q=s=>'"'+String(s).replace(/"/g,'""')+'"';const rows=[['Date','Type','Category','Amount','Note']].concat(S.entries.slice().sort((a,b)=>a.date.localeCompare(b.date)).map(e=>[e.date,e.type==='in'?'In':'Out',e.cat,e.amt,e.note]));return String.fromCharCode(65279)+rows.map(r=>r.map(q).join(',')).join(nl)}
 $('xRep').onclick=()=>{const m=$('month').value,es=S.entries.filter(e=>pkey(e.date)===m).sort((a,b)=>a.date.localeCompare(b.date));const inn=es.filter(e=>e.type==='in').reduce((s,e)=>s+e.amt,0),out=es.filter(e=>e.type==='out').reduce((s,e)=>s+e.amt,0),left=inn-out;const by={};es.filter(e=>e.type==='out').forEach(e=>by[e.cat]=(by[e.cat]||0)+e.amt);const rows=Object.entries(by).sort((a,b)=>b[1]-a[1]);const mn=plabel(m);
-const css=`body{margin:0;background:#f7f2fd;color:#2b2140;font:16px/1.5 Nunito,system-ui,sans-serif}.w{max-width:720px;margin:0 auto;padding:28px 18px}h1{margin:0;font-size:2rem;background:linear-gradient(135deg,#7a4fd6,#d63f7c);-webkit-background-clip:text;background-clip:text;color:transparent;display:inline-block}.s{color:#6f6485;margin:2px 0 18px}h2{font-size:1.1rem;margin:26px 0 10px}.k{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.k div{background:#fff;border-radius:18px;padding:14px;box-shadow:0 6px 20px rgba(122,79,214,.12)}.k small{display:block;color:#6f6485}.k b{font-size:1.2rem}.g{color:#138a72}.r{color:#d63f7c}.c{margin-bottom:10px}.c div:first-child{display:flex;justify-content:space-between}.b{height:10px;background:#e8def5;border-radius:99px;overflow:hidden;margin-top:4px}.b i{display:block;height:100%;background:linear-gradient(90deg,#7a4fd6,#d63f7c);border-radius:99px}table{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 6px 20px rgba(122,79,214,.12)}th{background:#efe6fb;text-align:left}th,td{padding:10px 12px}tr:nth-child(even) td{background:#fbf8fe}.n{text-align:right;white-space:nowrap}.f{color:#6f6485;font-size:.85rem;margin-top:22px}a{color:#7a4fd6;font-weight:700}button{background:linear-gradient(135deg,#7a4fd6,#d63f7c);color:#fff;border:0;border-radius:99px;padding:11px 20px;font:inherit;font-weight:700;cursor:pointer}@media print{button,a{display:none}body{background:#fff}}`;
-const html=`<!DOCTYPE html><html lang='${lang}'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>Duit Ledger report ${mn}</title><link href='https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&display=swap' rel='stylesheet'><style>${css}</style></head><body><div class='w'><h1>Duit Ledger</h1><p class='s'>${tr('Money report for')} ${mn}</p><div class='k'><div><small>${tr('Money in')}</small><b class='g'>${fmt(inn)}</b></div><div><small>${tr('Money out')}</small><b class='r'>${fmt(out)}</b></div><div><small>${tr('Left over')}</small><b class='${left<0?'r':'g'}'>${fmt(left)}</b></div></div><h2>${tr('Where your money went')}</h2>${rows.length?rows.map(([c,v])=>`<div class='c'><div><span>${esc(c)}</span><span>${fmt(v)} (${Math.round(v/out*100)}%)</span></div><div class='b'><i style='width:${v/rows[0][1]*100}%'></i></div></div>`).join(''):`<p class='s'>${tr('No spending this month.')}</p>`}<h2>${tr('All entries')}</h2><table><tr><th>${tr('Date')}</th><th>${tr('Category')}</th><th>${tr('Note')}</th><th class='n'>${tr('Amount')}</th></tr>${es.map(e=>`<tr><td>${e.date}</td><td>${esc(e.cat)}</td><td>${esc(e.note||'')}</td><td class='n ${e.type==='in'?'g':'r'}'>${e.type==='in'?'+':'-'}${fmt(e.amt)}</td></tr>`).join('')}</table><p class='f'>${tr('Made with Duit Ledger. Not financial advice.')}</p><p><a href='data:text/csv;charset=utf-8,${encodeURIComponent(csvText())}' download='duit-ledger.csv'>${tr('Download as spreadsheet (CSV)')}</a></p><button onclick='window.print()'>${tr('Print or save as PDF')}</button></div><footer class='app-signature' style='text-align:center;color:var(--mute);padding:24px 12px 8px;font-size:.85rem'>Made with ♡ by <strong>Aisha Jong</strong></footer>
+const css=`body{margin:0;background:#FAF6F0;color:#000;font:16px/1.5 DM Sans,system-ui,sans-serif}.w{max-width:720px;margin:0 auto;padding:28px 18px}h1{margin:0;font-size:2rem;background:#6E5A4B;-webkit-background-clip:text;background-clip:text;color:transparent;display:inline-block}.s{color:#5b5650;margin:2px 0 18px}h2{font-size:1.1rem;margin:26px 0 10px}.k{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.k div{background:#fff;border-radius:18px;padding:14px;border:1.5px solid #000}.k small{display:block;color:#5b5650}.k b{font-size:1.2rem}.g{color:#3F6B3A}.r{color:#A5372B}.c{margin-bottom:10px}.c div:first-child{display:flex;justify-content:space-between}.b{height:10px;background:#E8DFD2;border-radius:99px;overflow:hidden;margin-top:4px}.b i{display:block;height:100%;background:#6E5A4B;border-radius:99px}table{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border-radius:18px;overflow:hidden;border:1.5px solid #000}th{background:#E8DFD2;text-align:left}th,td{padding:10px 12px}tr:nth-child(even) td{background:#F7F2EA}.n{text-align:right;white-space:nowrap}.f{color:#5b5650;font-size:.85rem;margin-top:22px}a{color:#6E5A4B;font-weight:700}button{background:#6E5A4B;color:#fff;border:0;border-radius:99px;padding:11px 20px;font:inherit;font-weight:700;cursor:pointer}@media print{button,a{display:none}body{background:#fff}}`;
+const html=`<!DOCTYPE html><html lang='${lang}'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>Duit Ledger report ${mn}</title><link href='https://fonts.googleapis.com/css2?family=DM Sans:wght@400;600;800&display=swap' rel='stylesheet'><style>${css}</style></head><body><div class='w'><h1>Duit Ledger</h1><p class='s'>${tr('Money report for')} ${mn}</p><div class='k'><div><small>${tr('Money in')}</small><b class='g'>${fmt(inn)}</b></div><div><small>${tr('Money out')}</small><b class='r'>${fmt(out)}</b></div><div><small>${tr('Left over')}</small><b class='${left<0?'r':'g'}'>${fmt(left)}</b></div></div><h2>${tr('Where your money went')}</h2>${rows.length?rows.map(([c,v])=>`<div class='c'><div><span>${esc(c)}</span><span>${fmt(v)} (${Math.round(v/out*100)}%)</span></div><div class='b'><i style='width:${v/rows[0][1]*100}%'></i></div></div>`).join(''):`<p class='s'>${tr('No spending this month.')}</p>`}<h2>${tr('All entries')}</h2><table><tr><th>${tr('Date')}</th><th>${tr('Category')}</th><th>${tr('Note')}</th><th class='n'>${tr('Amount')}</th></tr>${es.map(e=>`<tr><td>${e.date}</td><td>${esc(e.cat)}</td><td>${esc(e.note||'')}</td><td class='n ${e.type==='in'?'g':'r'}'>${e.type==='in'?'+':'-'}${fmt(e.amt)}</td></tr>`).join('')}</table><p class='f'>${tr('Made with Duit Ledger. Not financial advice.')}</p><p><a href='data:text/csv;charset=utf-8,${encodeURIComponent(csvText())}' download='duit-ledger.csv'>${tr('Download as spreadsheet (CSV)')}</a></p><button onclick='window.print()'>${tr('Print or save as PDF')}</button></div><footer class='app-signature' style='text-align:center;color:var(--mute);padding:24px 12px 8px;font-size:.85rem'>Made with ♡ by <strong>Aisha Jong</strong></footer>
 </body></html>`;
 dl('duit-ledger-'+m+'.html',html,'text/html')};
 $('xJson').onclick=()=>dl('ledger-backup.json',JSON.stringify(S),'application/json');
@@ -379,6 +506,7 @@ function applyTheme(){$('thm').textContent=isDark()?'☀️':'🌙'}
 try{const t=localStorage.getItem('duit-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}
 $('thm').onclick=()=>{const t=isDark()?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('duit-theme',t)}catch(e){}applyTheme()};
 const D=[['Monthly ledger','Lejar bulanan','月度账本','மாதாந்திர கணக்கேடு'],['Debt planner','Perancang hutang','还债计划','கடன் திட்டம்'],['Savings goal','Matlamat simpanan','储蓄目标','சேமிப்பு இலக்கு'],['Spend with clarity. Pay down debt. Save for what matters. Your finances stay private, right on your device.','Urus wang dengan lebih yakin. Langsaikan hutang dan simpan untuk perkara yang bermakna. Kewangan anda kekal peribadi pada peranti anda.','清楚掌握开销，逐步还清债务，为重要的事物储蓄。财务资料仅保存在你的设备上。','தெளிவாகச் செலவிடுங்கள், கடனை அடையுங்கள், முக்கியமானவற்றுக்குச் சேமியுங்கள். உங்கள் நிதித் தகவல்கள் உங்கள் சாதனத்திலேயே தனிப்பட்டதாக இருக்கும்.'],['Month','Bulan','月份','மாதம்'],['Money in','Wang masuk','收入','வரவு'],['Money out','Wang keluar','支出','செலவு'],['Left over','Baki','结余','மீதம்'],['Add an entry','Tambah rekod','添加记录','பதிவைச் சேர்'],['Type','Jenis','类型','வகை'],['Category','Kategori','类别','பிரிவு'],['Amount (RM)','Jumlah (RM)','金额 (RM)','தொகை (RM)'],['Date','Tarikh','日期','தேதி'],['Note (optional)','Nota (pilihan)','备注（选填）','குறிப்பு (விருப்பம்)'],['Add entry','Tambah','添加','சேர்'],['Money in (salary, bonus)','Wang masuk (gaji, bonus)','收入（工资、奖金）','வரவு (சம்பளம், போனஸ்)'],['Money out (spending)','Wang keluar (perbelanjaan)','支出（花费）','செலவு'],['Where your money went','Ke mana wang anda pergi','钱花去了哪里','பணம் எங்கே சென்றது'],['Entries this month','Rekod bulan ini','本月记录','இம்மாத பதிவுகள்'],['Last 6 months','6 bulan lepas','最近6个月','கடந்த 6 மாதங்கள்'],['Monthly limits','Had bulanan','每月限额','மாத வரம்புகள்'],['Set limit','Tetapkan had','设置限额','வரம்பை அமை'],['Limit (RM)','Had (RM)','限额 (RM)','வரம்பு (RM)'],['Add a debt','Tambah hutang','添加债务','கடனைச் சேர்'],['Name','Nama','名称','பெயர்'],['Balance (RM)','Baki (RM)','余额 (RM)','நிலுவை (RM)'],['Interest per year (%)','Faedah setahun (%)','年利率 (%)','ஆண்டு வட்டி (%)'],['Minimum per month (RM)','Minimum sebulan (RM)','每月最低还款 (RM)','மாத குறைந்தபட்சம் (RM)'],['Add debt','Tambah','添加','சேர்'],['Your repayment plan','Pelan bayaran anda','你的还款计划','உங்கள் திருப்பிச் செலுத்தும் திட்டம்'],['Extra you can pay each month (RM)','Bayaran tambahan sebulan (RM)','每月额外还款 (RM)','மாதம் கூடுதலாக (RM)'],['Avalanche','Avalanche','雪崩法'],['Snowball','Bola salji','雪球法'],['Highest interest first. Pays the least interest.','Faedah tertinggi dahulu. Bayar faedah paling sedikit.','先还利率最高的，总利息最少。'],['Smallest balance first. Quick wins keep you going.','Baki terkecil dahulu. Kemenangan kecil beri semangat.','先还余额最小的，快速见效更有动力。'],['Goal name','Nama matlamat','目标名称','இலக்கு பெயர்'],['Target (RM)','Sasaran (RM)','目标金额 (RM)','இலக்கு (RM)'],['Save goal','Simpan matlamat','保存目标','இலக்கைச் சேமி'],['Your progress','Kemajuan anda','你的进度','உங்கள் முன்னேற்றம்'],['Add to savings (RM)','Tambah simpanan (RM)','存入储蓄 (RM)','சேமிப்பில் சேர் (RM)'],['Add savings','Tambah simpanan','存入','சேர்'],['Backup and export','Sandaran dan eksport','备份与导出','காப்பு & ஏற்றுமதி'],['Download report','Muat turun laporan','下载报告','அறிக்கை பதிவிறக்கு'],['Save backup','Simpan sandaran','保存备份','காப்பைச் சேமி'],['Restore backup','Pulihkan sandaran','恢复备份','காப்பை மீட்டெடு'],['No spending logged for this month yet.','Belum ada perbelanjaan direkod bulan ini.','本月还没有支出记录。','இந்த மாதம் செலவு பதிவு இல்லை.'],['Add your salary first, then log what you spend.','Tambah gaji dahulu, kemudian rekod perbelanjaan.','先添加工资，再记录花费。'],['Add each debt you owe to see your payoff plan.','Tambah setiap hutang untuk melihat pelan bayaran.','添加每笔债务以查看还款计划。'],['e.g. Food','cth. Makanan','例如：餐饮','எ.கா. உணவு'],['e.g. Credit card','cth. Kad kredit','例如：信用卡','எ.கா. கடன் அட்டை'],['Search entries','Cari rekod','搜索记录','தேடு'],['Pay','Bayar','还款','செலுத்து'],['paid','dibayar','已还','செலுத்தப்பட்டது'],['Amount paid (RM)?','Jumlah dibayar (RM)?','已还金额 (RM)？','செலுத்திய தொகை (RM)?'],['Quick start (typical rates, please change):','Mula cepat (kadar biasa, sila ubah):','快速开始（常见利率，请按实际修改）：'],['day streak! Keep logging.','hari berturut-turut! Teruskan merekod.','天连续记录！继续加油。'],['Over limit:','Melebihi had:','超出限额：'],['Nice! You are within all your limits.','Bagus! Anda dalam semua had.','太棒了！你没有超出任何限额。'],['Guide 50/30/20:','Panduan 50/30/20:','50/30/20 参考：'],['needs','keperluan','必需'],['wants','kehendak','想要'],['savings','simpanan','储蓄']];
+D.push(['Track money. Repay debt. Save more.','Jejak duit. Langsaikan hutang. Simpan lebih.','记录开销。还清债务。多存一点。','பணத்தைக் கண்காணி. கடனை அடை. அதிகம் சேமி.'],['Open ledger','Buka lejar','打开账本','கணக்கேட்டைத் திற']);
 D.push(['Recurring bills','Bil berulang','固定账单','தொடர் பில்கள்'],['Bill name','Nama bil','账单名称','பில் பெயர்'],['Day of month','Hari dalam bulan','每月几号','மாத நாள்'],['Day','Hari','日','நாள்'],['Add bill','Tambah bil','添加账单','பில் சேர்'],['Add bills to this month','Masukkan bil ke bulan ini','添加到本月','இம்மாதத்தில் சேர்'],['e.g. Rent','cth. Sewa','例如：房租','எ.கா. வாடகை'],['Add fixed bills like rent or Astro so you do not retype them every month.','Tambah bil tetap seperti sewa atau Astro supaya tak perlu taip setiap bulan.','添加房租等固定账单，不用每月重复输入。']);
 D.push(['Split a bill','Bahagi bil','分摊账单'],['Total (RM)','Jumlah (RM)','总额 (RM)'],['People','Orang','人数'],['Tax or service (%)','Cukai atau servis (%)','税费或服务费 (%)'],['each','seorang','每人'],['Save changes','Simpan perubahan','保存修改'],['Share summary image','Kongsi gambar ringkasan','分享摘要图片'],['Set PIN lock','Tetapkan kunci PIN','设置PIN锁']);
 D.push(['months','bulan','个月'],['days','hari','天'],['Create a goal such as Raya, holiday or emergency fund.','Cipta matlamat seperti Raya, percutian atau dana kecemasan.','创建目标，例如开斋节、旅行或应急基金。'],['Amount to save (RM)?','Jumlah simpanan (RM)?','存入金额 (RM)？'],['No-spend challenge','Cabaran tanpa belanja','无消费挑战'],['Skip this category','Elak kategori ini','戒掉这个类别'],['For how many days','Selama berapa hari','坚持几天'],['Start challenge','Mula cabaran','开始挑战'],['Stop challenge','Henti cabaran','停止挑战'],['Pick something to skip, like coffee or bubble tea, and keep your streak.','Pilih sesuatu untuk dielak, seperti kopi atau bubble tea, dan kekalkan streak.','选一样想戒的，比如咖啡或珍珠奶茶，保持连续记录。'],['You spent on it, but you can start again.','Anda ada berbelanja, tapi boleh mula semula.','你花钱了，但可以重新开始。'],['Challenge complete! Well done!','Cabaran tamat! Tahniah!','挑战完成！太棒了！'],['Keep going, no spending on this!','Teruskan, jangan belanja untuk ini!','继续加油，别在这上面花钱！'],['Import bank CSV','Import CSV bank','导入银行CSV'],['e.g. Coffee','cth. Kopi','例如：咖啡']);
@@ -396,6 +524,8 @@ D.push(['Yearly','Tahunan'],['Add','Tambah'],['Entries','Rekod'],['Entries, bill
 D.push(['Pay cycle','Kitaran gaji'],['My month starts on day','Bulan saya bermula pada hari'],['Carry leftover money into the next month','Bawa baki ke bulan seterusnya'],['Brought forward','Dibawa dari bulan lepas'],['Change','Ubah'],['Period','Tempoh'],['If you are paid on the 24th, set 24. Your month then runs from the 24th to the 23rd, so your salary and the bills it pays stay together.','Jika anda dibayar pada 24hb, tetapkan 24. Bulan anda kemudian bermula pada 24hb hingga 23hb, supaya gaji dan bil yang dibayar dengannya kekal bersama.']);
 D.push(['OK · Save settings','OK · Simpan tetapan'],['OK · Restore backup','OK · Pulihkan sandaran'],['Choose backup file','Pilih fail sandaran'],['Choose a backup file, then press OK to restore it.','Pilih fail sandaran, kemudian tekan OK untuk memulihkannya.'],['File selected. Press OK to restore your data.','Fail dipilih. Tekan OK untuk memulihkan data.'],['Not saved yet','Belum disimpan'],['✓ Settings saved','✓ Tetapan berjaya disimpan']);
 D.push(['How does your month start?','Bagaimana bulan anda bermula?'],['1st of every month','Pada 1hb setiap bulan'],['A fixed day each month','Hari tetap setiap bulan'],['When my salary comes in','Bila gaji saya masuk'],['Expected next salary date (optional)','Tarikh gaji seterusnya dijangka (pilihan)'],['This is my salary (starts a new month)','Ini gaji saya (mulakan bulan baru)'],['Salary day','Hari gaji'],['now','sekarang'],['Before your first salary','Sebelum gaji pertama'],['Choose when your month starts. Pick "When my salary comes in" if your pay date changes, for example government pay dates. Then tick "This is my salary" when you add your salary, and a new month starts on that day.','Pilih bila bulan anda bermula. Pilih "Bila gaji saya masuk" jika tarikh gaji berubah-ubah, contohnya gaji kerajaan. Kemudian tandakan "Ini gaji saya" semasa menambah gaji, dan bulan baru bermula pada hari itu.']);
+D.push(['Pay cycle and categories','Kitaran gaji dan kategori'],['Bills & limits','Bil & had']);
+D.push(['Install Duit Ledger','Pasang Duit Ledger'],['Add it to your home screen. It opens like an app and works offline.','Tambah ke skrin utama. Ia dibuka seperti app dan berfungsi tanpa internet.'],['On iPhone: tap Share, then Add to Home Screen.','Di iPhone: tekan Share, kemudian Add to Home Screen.'],['Open this page in Safari, then tap Share and Add to Home Screen.','Buka halaman ini dalam Safari, kemudian tekan Share dan Add to Home Screen.'],['Install app','Pasang app'],['Not now','Bukan sekarang'],['Install on your phone','Pasang di telefon anda'],['Android (Chrome): open the menu (⋮), then Install app.','Android (Chrome): buka menu (⋮), kemudian Install app.'],['iPhone (Safari): tap Share, then Add to Home Screen.','iPhone (Safari): tekan Share, kemudian Add to Home Screen.'],['Save a backup first, because the installed app can keep its own separate data. Then use Restore backup inside the installed app.','Simpan sandaran dahulu, kerana app yang dipasang boleh menyimpan data yang berasingan. Kemudian guna Restore backup dalam app yang dipasang.']);
 const L={ms:{},zh:{},ta:{}};D.forEach(r=>{L.ms[r[0]]=r[1];L.zh[r[0]]=r[2];if(r[3])L.ta[r[0]]=r[3]});
 let lang='en';try{lang=localStorage.getItem('duit-lang')||'en'}catch(e){}if(!['en','ms'].includes(lang))lang='en';
 const CATB={Salary:'Gaji',Rent:'Sewa',Food:'Makanan',Transport:'Pengangkutan',Bills:'Bil','Debt payment':'Bayaran hutang',Savings:'Simpanan',Other:'Lain-lain',Shopping:'Membeli-belah',Income:'Pendapatan'};
@@ -439,13 +569,13 @@ function renderBills(){$('rlist').innerHTML=S.bills.length?S.bills.map(b=>`<li><
 $('useR').onclick=()=>{const m=$('month').value;if(!m)return;S.bills.forEach(b=>{if(S.entries.some(e=>e.bill===b.id&&pkey(e.date)===m))return;S.entries.push({id:uid(),type:'out',cat:b.name,amt:b.amt,date:billDate(m,b.day),note:'',bill:b.id})});save();renderLedger()};
 // Self-contained GitHub Pages edition: no external service worker required.
 let editId=null;
-const PC=['#6c4cf1','#e0337f','#0a8a6c','#f59e0b','#3b82f6','#ec4899','#14b8a6','#a855f7'];
+const PC=['#6E5A4B','#C07A4E','#D9B26F','#7C8F6B','#A5372B','#B9A58E','#2B2622','#E3CBA8'];
 function PIE(rows,out){const el=$('pie');if(!rows.length){el.innerHTML='';return}let a=0;const seg=rows.map(([c,v],i)=>{const s=a;a+=v/out*100;return PC[i%8]+' '+s+'% '+a+'%'}).join(',');el.innerHTML=`<div style='display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-bottom:14px'><div style='width:130px;height:130px;border-radius:50%;background:conic-gradient(${seg});flex:none'></div><div style='display:grid;gap:4px;font-size:.9rem'>${rows.slice(0,8).map(([c],i)=>`<span><i style='display:inline-block;width:10px;height:10px;border-radius:50%;background:${PC[i%8]};margin-right:6px'></i>${esc(c)}</span>`).join('')}</div></div>`}
 // Split bill controls initialized in the enhanced module below.
 const hp=s=>{let x=5381;for(const c of s)x=(x*33^c.charCodeAt(0))>>>0;return String(x)};
 $('pin').oninput=()=>{const v=$('pin').value;if(hp(v)===S.pin){$('lock').hidden=true;$('pinMsg').textContent=''}else if(v.length>=(S.pinLen||4)){$('pinMsg').textContent=tr('Wrong PIN');$('pin').value=''}};
 $('setPin').onclick=()=>{const p=prompt('New PIN (4 to 8 digits). Leave empty to remove the PIN.');if(p===null)return;if(p===''){delete S.pin;delete S.pinLen;save();alert('PIN removed.');return}if(!/^\d{4,8}$/.test(p)){alert('PIN must be 4 to 8 digits.');return}S.pin=hp(p);S.pinLen=p.length;save();alert('PIN set. It will be asked the next time you open the app.')};
-$('xImg').onclick=()=>{const m=$('month').value,es=S.entries.filter(e=>pkey(e.date)===m),inn=es.filter(e=>e.type==='in').reduce((s,e)=>s+e.amt,0),out=es.filter(e=>e.type==='out').reduce((s,e)=>s+e.amt,0),by={};es.filter(e=>e.type==='out').forEach(e=>by[e.cat]=(by[e.cat]||0)+e.amt);const rows=Object.entries(by).sort((a,b)=>b[1]-a[1]).slice(0,3),mn=plabel(m),pc=inn>0?Math.max(0,Math.round((inn-out)/inn*100)):0,c=document.createElement('canvas');c.width=1080;c.height=1350;const g=c.getContext('2d'),gr=g.createLinearGradient(0,0,1080,1350),F='Nunito,system-ui,sans-serif';gr.addColorStop(0,'#6c4cf1');gr.addColorStop(1,'#e0337f');g.fillStyle=gr;g.fillRect(0,0,1080,1350);g.textAlign='center';g.fillStyle='#fff';g.font='800 70px '+F;g.fillText('Duit Ledger',540,150);g.font='600 40px '+F;g.fillText(mn,540,215);g.beginPath();(g.roundRect||g.rect).call(g,60,270,960,900,48);g.fill();g.fillStyle='#6c4cf1';g.font='800 190px '+F;g.fillText(inn>0?pc+'%':'✨',540,520);g.fillStyle='#1f1b3a';g.font='700 44px '+F;g.fillText(inn>0?tr('of my income saved'):tr('my money, tracked'),540,595);g.textAlign='left';rows.forEach(([n,v],i)=>{const y=720+i*130,p=out?v/out*100:0;g.fillStyle='#1f1b3a';g.font='700 38px '+F;g.fillText(n.slice(0,22)+'  '+Math.round(p)+'%',140,y);g.fillStyle='#ece8f7';g.fillRect(140,y+22,800,24);g.fillStyle=PC[i];g.fillRect(140,y+22,8*p,24)});g.textAlign='center';g.fillStyle='#fff';g.font='600 36px '+F;g.fillText('Made with Duit Ledger',540,1260);c.toBlob(b=>{const f=new File([b],'duit-summary.png',{type:'image/png'});if(navigator.canShare&&navigator.canShare({files:[f]}))navigator.share({files:[f]}).catch(()=>{});else{const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='duit-summary.png';document.body.appendChild(a);a.click();a.remove()}})};
+$('xImg').onclick=()=>{const m=$('month').value,es=S.entries.filter(e=>pkey(e.date)===m),inn=es.filter(e=>e.type==='in').reduce((s,e)=>s+e.amt,0),out=es.filter(e=>e.type==='out').reduce((s,e)=>s+e.amt,0),by={};es.filter(e=>e.type==='out').forEach(e=>by[e.cat]=(by[e.cat]||0)+e.amt);const rows=Object.entries(by).sort((a,b)=>b[1]-a[1]).slice(0,3),mn=plabel(m),pc=inn>0?Math.max(0,Math.round((inn-out)/inn*100)):0,c=document.createElement('canvas');c.width=1080;c.height=1350;const g=c.getContext('2d'),gr=g.createLinearGradient(0,0,1080,1350),F='DM Sans,system-ui,sans-serif';gr.addColorStop(0,'#6E5A4B');gr.addColorStop(1,'#6E5A4B');g.fillStyle=gr;g.fillRect(0,0,1080,1350);g.textAlign='center';g.fillStyle='#fff';g.font='800 70px '+F;g.fillText('Duit Ledger',540,150);g.font='600 40px '+F;g.fillText(mn,540,215);g.beginPath();(g.roundRect||g.rect).call(g,60,270,960,900,48);g.fill();g.fillStyle='#6E5A4B';g.font='800 190px '+F;g.fillText(inn>0?pc+'%':'✨',540,520);g.fillStyle='#000';g.font='700 44px '+F;g.fillText(inn>0?tr('of my income saved'):tr('my money, tracked'),540,595);g.textAlign='left';rows.forEach(([n,v],i)=>{const y=720+i*130,p=out?v/out*100:0;g.fillStyle='#000';g.font='700 38px '+F;g.fillText(n.slice(0,22)+'  '+Math.round(p)+'%',140,y);g.fillStyle='#E8DFD2';g.fillRect(140,y+22,800,24);g.fillStyle=PC[i];g.fillRect(140,y+22,8*p,24)});g.textAlign='center';g.fillStyle='#fff';g.font='600 36px '+F;g.fillText('Made with Duit Ledger',540,1260);c.toBlob(b=>{const f=new File([b],'duit-summary.png',{type:'image/png'});if(navigator.canShare&&navigator.canShare({files:[f]}))navigator.share({files:[f]}).catch(()=>{});else{const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='duit-summary.png';document.body.appendChild(a);a.click();a.remove()}})};
 function renderJars(){renderNW();const left=monthLeft();$('gOut').innerHTML=S.jars.length?S.jars.map(j=>{const p=Math.min(100,j.saved/j.target*100),rem=Math.max(0,j.target-j.saved),est=rem<=0?'🎉':(j.due?(()=>{const q=today.split('-').map(Number),r=j.due.split('-').map(Number),mm=Math.max(1,(r[0]-q[0])*12+r[1]-q[1]);return fmt(rem/mm)+' '+tr('per month')+' ('+j.due+')'})():left>0?'~'+Math.ceil(rem/left)+' '+tr('months'):'');return `<div class='cat'><div><span>🌱 ${esc(j.name)}</span><span class='amt'>${fmt(j.saved)} / ${fmt(j.target)}</span></div><div class='bar'><i style='width:${p}%'></i></div><div class='m' style='display:flex;justify-content:space-between;align-items:center'><span>${est}</span><span><button class='g' data-ja='${j.id}' style='color:var(--acc);font-weight:700'>${tr('Add savings')}</button><button class='g' data-jd='${j.id}' aria-label='Delete goal'>✕</button></span></div></div>`}).join(''):`<div class='empty'>${tr('Create a goal such as Raya, holiday or emergency fund.')}</div>`;document.querySelectorAll('[data-ja]').forEach(b=>b.onclick=()=>{const a=parseFloat(prompt(tr('Amount to save (RM)? Use a minus number to withdraw.'))),j=S.jars.find(x=>x.id===b.dataset.ja);if(!j||!a)return;j.saved=Math.max(0,j.saved+a);save();renderJars()});document.querySelectorAll('[data-jd]').forEach(b=>b.onclick=()=>{if(!confirm(tr('Delete this?')))return;S.jars=S.jars.filter(x=>x.id!==b.dataset.jd);save();renderJars()})}
 if(S.goal&&S.goal.target>0&&!S.jars.length){S.jars.push({id:uid(),name:S.goal.name||'My goal',target:S.goal.target,saved:S.goal.saved||0});S.goal={name:'',target:0,saved:0};save()}
 $('nGo').onclick=()=>{const c=$('nCat').value.trim(),d=parseInt($('nDays').value)||7;if(!c)return;S.nsc={cat:c,days:d,start:today};save();renderNsc()};
@@ -538,6 +668,13 @@ addEventListener('popstate',e=>{e.state&&e.state.s?openSec(e.state.s,true):showH
  const addHeading=main.querySelector('h2');
  if(addHeading&&addHeading.textContent.trim()==='Add an entry')addHeading.textContent=tr('Add an entry');
 })();
+(function tidyLedger(){
+ const main=document.querySelector('#p1 .grp[data-g="1"]');if(!main)return;
+ const box=t=>[...main.children].find(c=>{const h=c.querySelector&&c.querySelector(':scope>h2');return h&&h.textContent.trim()===t});
+ const mk=(id,icon,label,boxes)=>{const d=document.createElement('details');d.className='more';d.id=id;const sm=document.createElement('summary');sm.innerHTML="<span style='margin-right:6px'>"+icon+"</span>"+label;d.appendChild(sm);boxes.filter(Boolean).forEach(b=>d.appendChild(b));main.appendChild(d)};
+ mk('dBills','🔁','Bills & limits',[box('Recurring bills'),box('Monthly limits')]);
+ mk('dCycle','⚙️','Pay cycle and categories',[box('Pay cycle'),box('My categories')]);
+})();
 function showGrp(g){document.querySelectorAll('#p1 .grp').forEach(x=>x.hidden=x.dataset.g!==String(g));document.querySelectorAll('#subtabs .stab').forEach(b=>b.setAttribute('aria-pressed',b.dataset.g===String(g)))}
 document.querySelectorAll('#subtabs .stab').forEach(b=>b.onclick=()=>showGrp(b.dataset.g));showGrp(1);
 $('gear').onclick=()=>openSec(7);
@@ -558,8 +695,10 @@ showHome(true);
 /* Reliable autosave for pay-cycle and wedding-fund settings. */
 function autosaveCycle(){
  const v=$('cMode').value;
+ let dayVal=Math.min(28,Math.max(1,parseInt($('cDay').value)||24));
+ if(v==='day'&&dayVal<2){dayVal=24;$('cDay').value=24}
  S.cycleMode=v==='salary'?'salary':'day';
- S.cycleDay=v==='cal'?1:Math.min(28,Math.max(1,parseInt($('cDay').value)||24));
+ S.cycleDay=v==='cal'?1:dayVal;
  S.nextPay=$('cNext').value||'';S.carry=$('cCarry').checked;
  save();refreshPD();$('month').value=pkey(today);syncCycleUI();renderLedger();
  $('cycleStatus').textContent=lang==='ms'?'✓ Disimpan automatik':'✓ Auto-saved';
@@ -644,6 +783,23 @@ window.addEventListener('pagehide',autosaveEverything);
 window.addEventListener('beforeunload',autosaveEverything);
 // This is local-device autosave; it does not synchronize two separate devices.
 
+
+/* Install on phone (PWA) */
+(function(){
+ const standalone=()=>matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+ const ua=navigator.userAgent,ios=/iphone|ipad|ipod/i.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+ const otherIosBrowser=/CriOS|FxiOS|EdgiOS|OPiOS/i.test(ua);
+ const card=document.getElementById('installCard');let dp=null,dismissed=false;
+ try{dismissed=localStorage.getItem('duit-install-dismissed')==='1'}catch(e){}
+ const show=()=>{if(standalone()||dismissed)return;card.style.display='block'};
+ const hide=()=>{card.style.display='none'};
+ window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();dp=e;document.getElementById('insBtn').style.display='inline-flex';show()});
+ window.addEventListener('appinstalled',()=>{dp=null;hide()});
+ if(ios&&!standalone()){document.getElementById('insText').style.display='none';document.getElementById(otherIosBrowser?'insSafari':'insIos').style.display='block';show()}
+ document.getElementById('insBtn').onclick=async()=>{if(!dp)return;dp.prompt();try{await dp.userChoice}catch(e){}dp=null;hide()};
+ document.getElementById('insNo').onclick=()=>{dismissed=true;try{localStorage.setItem('duit-install-dismissed','1')}catch(e){}hide()};
+ if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1')){window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').then(r=>r.update&&r.update()).catch(()=>{})})}
+})();
 </script>
 <footer class='app-signature' style='text-align:center;color:var(--mute);padding:24px 12px 8px;font-size:.85rem'>Made with ♡ by <strong>Aisha Jong</strong></footer>
 </body>
